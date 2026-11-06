@@ -112,7 +112,6 @@ nav a[aria-current="page"]{background:var(--ink);color:#fff}
 /* ===== PENGATURAN — satu-satunya bagian yang perlu diubah bila ada perbedaan ===== */
 const CONFIG = {
   URL: "https://opensheet.elk.sh/1UXItiDpajKD1vMZhFhTuCNBaXoZ5sSCtm9ZQRP9E1H8/Sheet1",
-  // Nama kolom di Google Sheets (tidak peka huruf besar/kecil & spasi). Tambahkan alias bila perlu.
   FIELDS: {
     nama:    ["nama","namalengkap","name"],
     jabatan: ["jabatan","posisi","role"],
@@ -121,7 +120,6 @@ const CONFIG = {
     poin:    ["poin","point","points","totalpoin","skor"],
     foto:    ["foto","photo","gambar","image","linkfoto"]
   },
-  // Aturan warna kartu berdasarkan teks di kolom "Tahun". Diperiksa dari atas ke bawah.
   YEAR_THEMES: [
     { test: /(?<!\d)2(?!\d)|\bdua\b|\bii\b/i, cls: "t2" },  // Ungu
     { test: /(?<!\d)1(?!\d)|\bsatu\b|\bi\b/i,  cls: "t1" }   // Pink
@@ -197,7 +195,7 @@ function render(){
     return;
   }
   $("grid").innerHTML = list.map((p, i) => {
-    const wide = i % 5 === 0 ? " wide" : "";           // variasi bento: tiap kartu ke-1, 6, 11, ... melebar
+    const wide = i % 5 === 0 ? " wide" : "";
     const ava = p.foto ? `<img src="${esc(p.foto)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : "";
     return `<button class="card ${themeOf(p.tahun)}${wide}" data-i="${people.indexOf(p)}">
       <div class="c-top">
