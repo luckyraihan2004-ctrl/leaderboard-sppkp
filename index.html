@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pengurus SPPKP HIMBIG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ececed; --card:#fff; --ink:#111; --muted:#7a7a80;
+  --accent:#ff5a36;
+  --purple:#6d4aff; --pink:#ff9ec4;
+  --r:22px;
+}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:150px}
+body{font-family:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);
+  min-height:100vh;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Header + filter (menempel di atas) */
+.top{position:sticky;top:0;z-index:5;background:var(--bg);
+  padding:calc(18px + env(safe-area-inset-top,0px)) 16px 10px}
+.top-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+h1{font-size:44px;font-weight:500;letter-spacing:-.04em;line-height:1}
+.count{font-size:14px;color:var(--muted);padding-bottom:6px;text-align:right}
+.count b{font-weight:500;color:var(--ink)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:14px -16px 0;padding:0 16px 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:0;background:#fff;border-radius:999px;padding:10px 16px;font-size:14px;font-weight:500;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff}
+
+/* Bento grid */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:6px 16px 0;max-width:900px;margin:0 auto}
+.card{position:relative;display:flex;flex-direction:column;justify-content:space-between;text-align:left;
+  min-height:188px;padding:14px;border:0;border-radius:var(--r);background:var(--card);color:var(--ink);overflow:hidden}
+.card.t2{background:var(--purple);color:#fff}
+.card.t1{background:var(--pink);color:var(--ink)}
+.card.wide{grid-column:span 2;min-height:150px}
+.c-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.c-who{display:flex;align-items:center;gap:8px;min-width:0}
+.ava{flex:none;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.08);display:grid;place-items:center;
+  font-size:12px;font-weight:600;overflow:hidden}
+.ava img{width:100%;height:100%;object-fit:cover}
+.t2 .ava{background:rgba(255,255,255,.22)}
+.c-div{font-size:12.5px;line-height:1.2;opacity:.7;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.arrow{flex:none;width:18px;height:18px;opacity:.75}
+.c-name{font-size:25px;font-weight:500;letter-spacing:-.035em;line-height:1.02;overflow-wrap:anywhere}
+.c-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:10px}
+.c-role{font-size:13px;opacity:.7;line-height:1.2}
+.pts{flex:none;font-size:12px;font-weight:600;padding:5px 9px;border-radius:999px;background:rgba(0,0,0,.08)}
+.t2 .pts{background:rgba(255,255,255,.2)}
+
+/* Status */
+.state{grid-column:1/-1;padding:56px 12px;text-align:center;color:var(--muted);font-size:15px;line-height:1.5}
+.state button{margin-top:14px;border:0;background:var(--ink);color:#fff;border-radius:999px;padding:11px 20px;font-weight:500}
+.skel{min-height:188px;border-radius:var(--r);background:linear-gradient(100deg,#f6f6f7 40%,#fff 50%,#f6f6f7 60%) 0 0/200% 100%;animation:sh 1.3s linear infinite}
+@keyframes sh{to{background-position:-200% 0}}
+
+/* Detail sheet */
+dialog{border:0;border-radius:28px 28px 0 0;padding:22px 20px calc(26px + env(safe-area-inset-bottom,0px));margin:auto auto 0;
+  width:100%;max-width:560px;background:#fff;color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.35)}
+dialog[open]{animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(24px);opacity:0}}
+.d-name{font-size:32px;font-weight:500;letter-spacing:-.04em;line-height:1.05;margin:6px 0 16px}
+.d-row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid #eee;font-size:15px}
+.d-row span:first-child{color:var(--muted)}
+.d-close{margin-top:14px;width:100%;border:0;border-radius:999px;background:var(--ink);color:#fff;padding:14px;font-weight:500}
+
+/* Navigasi bawah */
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:10;
+  display:flex;gap:4px;padding:5px;border-radius:999px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.12)}
+nav a{padding:12px 18px;border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap}
+nav a[aria-current="page"]{background:var(--ink);color:#fff}
+
+@media (min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.card.wide{grid-column:span 1;min-height:188px}}
+@media (min-width:1000px){.grid{grid-template-columns:repeat(4,1fr);max-width:1100px}.top{padding-left:max(16px,calc(50vw - 550px));padding-right:max(16px,calc(50vw - 550px))}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-row">
+    <h1>Pengurus</h1>
+    <div class="count" id="count" aria-live="polite"></div>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="Filter divisi"></div>
+</header>
+
+<main class="grid" id="grid" aria-live="polite"></main>
+
+<dialog id="sheet" aria-labelledby="d-name">
+  <div class="c-div" id="d-div"></div>
+  <h2 class="d-name" id="d-name"></h2>
+  <div id="d-rows"></div>
+  <button class="d-close" id="d-close">Tutup</button>
+</dialog>
+
+<nav aria-label="Menu utama">
+  <a href="index.html" aria-current="page">Pengurus</a>
+  <a href="leaderboard.html">Leaderboard</a>
+  <a href="regulasi.html">Regulasi</a>
+</nav>
+
+<script>
+/* ===== PENGATURAN — satu-satunya bagian yang perlu diubah bila ada perbedaan ===== */
+const CONFIG = {
+  URL: "https://opensheet.elk.sh/1UXItiDpajKD1vMZhFhTuCNBaXoZ5sSCtm9ZQRP9E1H8/Sheet1",
+  // Nama kolom di Google Sheets (tidak peka huruf besar/kecil & spasi). Tambahkan alias bila perlu.
+  FIELDS: {
+    nama:    ["nama","namalengkap","name"],
+    jabatan: ["jabatan","posisi","role"],
+    divisi:  ["divisi","division","bidang"],
+    tahun:   ["tahun","angkatan"],
+    poin:    ["poin","point","points","totalpoin","skor"],
+    foto:    ["foto","photo","gambar","image","linkfoto"]
+  },
+  // Aturan warna kartu berdasarkan teks di kolom "Tahun". Diperiksa dari atas ke bawah.
+  YEAR_THEMES: [
+    { test: /(?<!\d)2(?!\d)|\bdua\b|\bii\b/i, cls: "t2" },  // Ungu
+    { test: /(?<!\d)1(?!\d)|\bsatu\b|\bi\b/i,  cls: "t1" }   // Pink
+  ]
+};
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = s => String(s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+const ARROW = '<svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>';
+
+let people = [], activeDiv = "Semua";
+
+function pick(row, aliases){
+  const keys = Object.keys(row);
+  for (const a of aliases){
+    const k = keys.find(k => norm(k) === a);
+    if (k !== undefined) return String(row[k] ?? "").trim();
+  }
+  return "";
+}
+function themeOf(tahun){
+  const t = CONFIG.YEAR_THEMES.find(t => t.test.test(tahun));
+  return t ? t.cls : "";
+}
+function initials(n){
+  return n.split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join("") || "?";
+}
+
+async function load(){
+  $("grid").innerHTML = '<div class="skel"></div>'.repeat(4);
+  try{
+    const res = await fetch(CONFIG.URL, {cache:"no-cache"});
+    if (!res.ok) throw new Error(res.status);
+    const rows = await res.json();
+    if (!Array.isArray(rows)) throw new Error("format");
+    people = rows.map(r => {
+      const o = {};
+      for (const f in CONFIG.FIELDS) o[f] = pick(r, CONFIG.FIELDS[f]);
+      return o;
+    }).filter(p => p.nama);
+    buildChips();
+    render();
+  }catch(e){
+    $("count").textContent = "";
+    $("grid").innerHTML = '<div class="state">Data belum bisa dimuat. Periksa koneksi internet, lalu coba lagi.<br><button id="retry">Muat ulang</button></div>';
+    $("retry").onclick = load;
+  }
+}
+
+/* Tombol filter dibuat otomatis dari isi kolom Divisi */
+function buildChips(){
+  const seen = new Map();
+  people.forEach(p => { const k = norm(p.divisi); if (p.divisi && !seen.has(k)) seen.set(k, p.divisi); });
+  const list = ["Semua", ...seen.values()];
+  if (!list.includes(activeDiv)) activeDiv = "Semua";
+  $("chips").innerHTML = list.map(d =>
+    `<button class="chip" data-d="${esc(d)}" aria-pressed="${d === activeDiv}">${esc(d)}</button>`).join("");
+}
+$("chips").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  activeDiv = b.dataset.d;
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+  render();
+  scrollTo({top:0, behavior:"smooth"});
+});
+
+function render(){
+  const list = people.filter(p => activeDiv === "Semua" || norm(p.divisi) === norm(activeDiv));
+  $("count").innerHTML = `<b>${list.length}</b> anggota`;
+  if (!list.length){
+    $("grid").innerHTML = '<div class="state">Belum ada anggota di divisi ini.</div>';
+    return;
+  }
+  $("grid").innerHTML = list.map((p, i) => {
+    const wide = i % 5 === 0 ? " wide" : "";           // variasi bento: tiap kartu ke-1, 6, 11, ... melebar
+    const ava = p.foto ? `<img src="${esc(p.foto)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : "";
+    return `<button class="card ${themeOf(p.tahun)}${wide}" data-i="${people.indexOf(p)}">
+      <div class="c-top">
+        <div class="c-who"><span class="ava">${ava || esc(initials(p.nama))}</span><span class="c-div">${esc(p.divisi)}</span></div>
+        ${ARROW}
+      </div>
+      <div>
+        <div class="c-name">${esc(p.nama)}</div>
+        <div class="c-foot">
+          <span class="c-role">${esc(p.jabatan)}</span>
+          ${p.poin ? `<span class="pts">${esc(p.poin)} poin</span>` : ""}
+        </div>
+      </div>
+    </button>`;
+  }).join("");
+}
+
+/* Detail anggota */
+$("grid").addEventListener("click", e => {
+  const c = e.target.closest(".card"); if (!c) return;
+  const p = people[+c.dataset.i];
+  $("d-div").textContent = p.divisi;
+  $("d-name").textContent = p.nama;
+  const rows = [["Jabatan", p.jabatan], ["Divisi", p.divisi], ["Tahun", p.tahun], ["Poin", p.poin]].filter(r => r[1]);
+  $("d-rows").innerHTML = rows.map(r => `<div class="d-row"><span>${r[0]}</span><span>${esc(r[1])}</span></div>`).join("");
+  $("sheet").showModal();
+});
+$("d-close").onclick = () => $("sheet").close();
+$("sheet").addEventListener("click", e => { if (e.target === $("sheet")) $("sheet").close(); });
+
+load();
+</script>
+</body>
+</html>
