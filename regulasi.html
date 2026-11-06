@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Regulasi Poin SPPKP HIMBIG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ececed; --card:#fff; --ink:#111; --muted:#7a7a80;
+  --accent:#ff5a36; --purple:#6d4aff; --pink:#ff9ec4;
+  --r:22px;
+}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);
+  min-height:100vh;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px));line-height:1.45}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+
+.top{padding:calc(18px + env(safe-area-inset-top,0px)) 0 8px}
+h1{font-size:44px;font-weight:500;letter-spacing:-.04em;line-height:1}
+.lead{margin-top:12px;font-size:16px;color:var(--muted);max-width:60ch}
+
+/* Pemberitahuan sementara — hapus elemen .draft setelah isi aturan diganti */
+.draft{margin-top:16px;padding:12px 16px;border-radius:16px;background:var(--accent);color:#fff;font-size:14px;font-weight:500}
+
+.grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}
+.card{background:var(--card);border-radius:var(--r);padding:18px}
+.card.dark{background:var(--ink);color:#fff}
+h2{font-size:26px;font-weight:500;letter-spacing:-.035em;line-height:1.05}
+.sub{font-size:14px;opacity:.65;margin:6px 0 14px}
+
+/* Daftar poin */
+.rules{list-style:none;padding:0}
+.rules li{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;border-top:1px solid #efeff0;font-size:15.5px}
+.rules li:first-child{border-top:0}
+.pt{flex:none;font-size:13px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--ink);color:#fff;font-variant-numeric:tabular-nums}
+.pt.minus{background:var(--accent)}
+
+/* Ketentuan umum */
+.terms{padding-left:20px;font-size:15.5px}
+.terms li{padding:7px 0 7px 4px}
+.terms li::marker{color:rgba(255,255,255,.5);font-weight:500}
+
+/* Arti warna */
+.keys{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.key{border-radius:18px;padding:14px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;font-size:15px;font-weight:500}
+.key small{font-size:12.5px;font-weight:400;opacity:.75}
+.key.t2{background:var(--purple);color:#fff}
+.key.t1{background:var(--pink)}
+
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:10;
+  display:flex;gap:4px;padding:5px;border-radius:999px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.12)}
+nav a{padding:12px 18px;border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap}
+nav a[aria-current="page"]{background:var(--ink);color:#fff}
+
+@media (min-width:700px){
+  .grid{grid-template-columns:1fr 1fr}
+  .wide{grid-column:span 2}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Regulasi</h1>
+    <p class="lead">Aturan penilaian poin pengurus SPPKP HIMBIG. Poin dikumpulkan sepanjang periode kepengurusan dan menentukan peringkat di halaman Leaderboard.</p>
+    <!-- HAPUS baris .draft di bawah ini setelah aturan di bawah diganti dengan aturan yang sebenarnya -->
+    <p class="draft">Isi aturan di halaman ini masih contoh. Ganti dengan aturan resmi, lalu hapus pemberitahuan ini.</p>
+  </header>
+
+  <main class="grid">
+
+    <!-- ===== KARTU 1: POIN MASUK. Salin satu baris <li> untuk menambah aturan. ===== -->
+    <section class="card">
+      <h2>Menambah poin</h2>
+      <p class="sub">Kegiatan yang memberi poin</p>
+      <ul class="rules">
+        <li><span>Hadir rapat rutin</span><b class="pt">+5</b></li>
+        <li><span>Hadir kegiatan besar himpunan</span><b class="pt">+10</b></li>
+        <li><span>Menjadi panitia kegiatan</span><b class="pt">+15</b></li>
+        <li><span>Menyelesaikan program kerja tepat waktu</span><b class="pt">+20</b></li>
+      </ul>
+    </section>
+
+    <!-- ===== KARTU 2: POIN KELUAR ===== -->
+    <section class="card">
+      <h2>Mengurangi poin</h2>
+      <p class="sub">Pelanggaran yang memotong poin</p>
+      <ul class="rules">
+        <li><span>Tidak hadir rapat tanpa keterangan</span><b class="pt minus">−5</b></li>
+        <li><span>Terlambat mengumpulkan laporan</span><b class="pt minus">−5</b></li>
+        <li><span>Tidak hadir kegiatan besar tanpa keterangan</span><b class="pt minus">−10</b></li>
+      </ul>
+    </section>
+
+    <!-- ===== KARTU 3: KETENTUAN UMUM. Urutan nomor otomatis. ===== -->
+    <section class="card dark wide">
+      <h2>Ketentuan umum</h2>
+      <p class="sub">Berlaku untuk semua pengurus</p>
+      <ol class="terms">
+        <li>Poin dicatat oleh pengurus yang ditunjuk dan diperbarui secara berkala.</li>
+        <li>Izin yang disampaikan sebelum kegiatan tidak mengurangi poin.</li>
+        <li>Keberatan atas poin disampaikan kepada ketua divisi paling lambat satu minggu setelah poin dicatat.</li>
+        <li>Peringkat dengan poin yang sama ditampilkan sebagai peringkat yang sama.</li>
+      </ol>
+    </section>
+
+    <!-- ===== KARTU 4: ARTI WARNA KARTU (sesuai kolom Tahun di Google Sheets) ===== -->
+    <section class="card wide">
+      <h2>Arti warna kartu</h2>
+      <p class="sub">Warna kartu anggota menunjukkan tahun kepengurusan</p>
+      <div class="keys">
+        <div class="key t2">Tahun 2<small>Pengurus tahun kedua</small></div>
+        <div class="key t1">Tahun 1<small>Pengurus tahun pertama</small></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<nav aria-label="Menu utama">
+  <a href="index.html">Pengurus</a>
+  <a href="leaderboard.html">Leaderboard</a>
+  <a href="regulasi.html" aria-current="page">Regulasi</a>
+</nav>
+
+</body>
+</html>

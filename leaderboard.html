@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leaderboard SPPKP HIMBIG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ececed; --card:#fff; --ink:#111; --muted:#7a7a80;
+  --accent:#ff5a36; --purple:#6d4aff; --pink:#ff9ec4;
+  --r:22px;
+}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);
+  min-height:100vh;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+
+.top{padding:calc(18px + env(safe-area-inset-top,0px)) 0 14px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+h1{font-size:44px;font-weight:500;letter-spacing:-.04em;line-height:1}
+.count{font-size:14px;color:var(--muted);padding-bottom:6px;text-align:right}
+.count b{font-weight:500;color:var(--ink)}
+
+/* Top 3 */
+.podium{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pc{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:176px;padding:14px;
+  border-radius:var(--r);background:var(--card);color:var(--ink);overflow:hidden}
+.pc.t2{background:var(--purple);color:#fff}
+.pc.t1{background:var(--pink)}
+.pc.first{grid-column:span 2;min-height:230px}
+.rank{font-size:84px;font-weight:200;letter-spacing:-.06em;line-height:.8}
+.first .rank{font-size:132px}
+.p-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.p-div{font-size:12.5px;line-height:1.2;opacity:.7;max-width:60%}
+.ava{flex:none;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.08);display:grid;place-items:center;font-size:13px;font-weight:600;overflow:hidden}
+.ava img{width:100%;height:100%;object-fit:cover}
+.t2 .ava{background:rgba(255,255,255,.22)}
+.p-name{font-size:24px;font-weight:500;letter-spacing:-.035em;line-height:1.02;overflow-wrap:anywhere}
+.first .p-name{font-size:32px}
+.p-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:8px}
+.p-role{font-size:13px;opacity:.7;line-height:1.2}
+.pts{flex:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:999px;background:rgba(0,0,0,.08)}
+.t2 .pts{background:rgba(255,255,255,.2)}
+.first .pts{background:var(--ink);color:#fff}
+
+/* Tabel */
+.sec{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 10px}
+h2{font-size:24px;font-weight:500;letter-spacing:-.03em}
+.search{flex:1;max-width:220px;border:0;border-radius:999px;background:#fff;padding:10px 16px;font:inherit;font-size:14px;color:var(--ink)}
+.search::placeholder{color:var(--muted)}
+.table{background:#fff;border-radius:var(--r);overflow:hidden}
+.row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:10px;padding:13px 16px;border-top:1px solid #f0f0f1}
+.row:first-child{border-top:0}
+.r-n{font-size:17px;font-weight:500;color:var(--muted)}
+.r-name{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:500;letter-spacing:-.01em;min-width:0}
+.dot{flex:none;width:10px;height:10px;border-radius:50%;background:#d6d6d9}
+.dot.t2{background:var(--purple)} .dot.t1{background:var(--pink)}
+.r-sub{font-size:13px;color:var(--muted);margin-top:2px;font-weight:400}
+.r-pts{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--muted);margin:12px 4px 0}
+.legend span{display:flex;align-items:center;gap:6px}
+
+.state{padding:56px 12px;text-align:center;color:var(--muted);font-size:15px;line-height:1.5}
+.state button{margin-top:14px;border:0;background:var(--ink);color:#fff;border-radius:999px;padding:11px 20px;font:inherit;font-weight:500;cursor:pointer}
+.skel{min-height:176px;border-radius:var(--r);background:linear-gradient(100deg,#f6f6f7 40%,#fff 50%,#f6f6f7 60%) 0 0/200% 100%;animation:sh 1.3s linear infinite}
+.skel.first{grid-column:span 2;min-height:230px}
+@keyframes sh{to{background-position:-200% 0}}
+
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:10;
+  display:flex;gap:4px;padding:5px;border-radius:999px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.12)}
+nav a{padding:12px 18px;border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap}
+nav a[aria-current="page"]{background:var(--ink);color:#fff}
+
+@media (min-width:700px){
+  .podium{grid-template-columns:1fr 1fr 1fr}
+  .pc.first{grid-column:span 1;grid-row:1;grid-column:2;min-height:260px}
+  .pc.second{grid-column:1;grid-row:1}.pc.third{grid-column:3;grid-row:1}
+  .pc{min-height:260px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Leaderboard</h1>
+    <div class="count" id="count" aria-live="polite"></div>
+  </header>
+
+  <main>
+    <section class="podium" id="podium" aria-label="Tiga peringkat teratas"></section>
+    <section id="rest" hidden>
+      <div class="sec">
+        <h2>Peringkat</h2>
+        <input class="search" id="q" type="search" placeholder="Cari nama" aria-label="Cari nama anggota">
+      </div>
+      <div class="table" id="table"></div>
+      <div class="legend"><span><i class="dot t2"></i>Tahun 2</span><span><i class="dot t1"></i>Tahun 1</span></div>
+    </section>
+  </main>
+</div>
+
+<nav aria-label="Menu utama">
+  <a href="index.html">Pengurus</a>
+  <a href="leaderboard.html" aria-current="page">Leaderboard</a>
+  <a href="regulasi.html">Regulasi</a>
+</nav>
+
+<script>
+/* ===== PENGATURAN — sama dengan index.html ===== */
+const CONFIG = {
+  URL: "https://opensheet.elk.sh/1UXItiDpajKD1vMZhFhTuCNBaXoZ5sSCtm9ZQRP9E1H8/Sheet1",
+  FIELDS: {
+    nama:    ["nama","namalengkap","name"],
+    jabatan: ["jabatan","posisi","role"],
+    divisi:  ["divisi","division","bidang"],
+    tahun:   ["tahun","angkatan"],
+    poin:    ["poin","point","points","totalpoin","skor"],
+    foto:    ["foto","photo","gambar","image","linkfoto"]
+  },
+  YEAR_THEMES: [
+    { test: /(?<!\d)2(?!\d)|\bdua\b|\bii\b/i, cls: "t2" },
+    { test: /(?<!\d)1(?!\d)|\bsatu\b|\bi\b/i,  cls: "t1" }
+  ],
+  TABLE_START: 4   // tabel dimulai dari peringkat ke-4. Ubah ke 1 untuk menampilkan semua anggota di tabel.
+};
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = s => String(s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+const fmt = n => n.toLocaleString("id-ID");
+
+function pick(row, aliases){
+  const keys = Object.keys(row);
+  for (const a of aliases){
+    const k = keys.find(k => norm(k) === a);
+    if (k !== undefined) return String(row[k] ?? "").trim();
+  }
+  return "";
+}
+function themeOf(t){ const m = CONFIG.YEAR_THEMES.find(m => m.test.test(t)); return m ? m.cls : ""; }
+function initials(n){ return n.split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join("") || "?"; }
+/* Membaca angka: "1.250", "1,250", "1250", "12,5" */
+function toNum(s){
+  let v = String(s).trim().replace(/[^\d.,-]/g, "");
+  if (/^-?\d{1,3}([.,]\d{3})+$/.test(v)) v = v.replace(/[.,]/g, "");
+  else v = v.replace(",", ".");
+  const n = parseFloat(v);
+  return isNaN(n) ? 0 : n;
+}
+
+let ranked = [];
+
+async function load(){
+  $("podium").innerHTML = '<div class="skel first"></div><div class="skel"></div><div class="skel"></div>';
+  $("rest").hidden = true;
+  try{
+    const res = await fetch(CONFIG.URL, {cache:"no-cache"});
+    if (!res.ok) throw new Error(res.status);
+    const rows = await res.json();
+    if (!Array.isArray(rows)) throw new Error("format");
+    const list = rows.map(r => {
+      const o = {};
+      for (const f in CONFIG.FIELDS) o[f] = pick(r, CONFIG.FIELDS[f]);
+      o.score = toNum(o.poin);
+      return o;
+    }).filter(p => p.nama);
+    list.sort((a, b) => b.score - a.score || a.nama.localeCompare(b.nama, "id"));
+    // Poin sama = peringkat sama
+    list.forEach((p, i) => { p.rank = i && p.score === list[i-1].score ? list[i-1].rank : i + 1; });
+    ranked = list;
+    render();
+  }catch(e){
+    $("count").textContent = "";
+    $("podium").innerHTML = '<div class="state" style="grid-column:1/-1">Data belum bisa dimuat. Periksa koneksi internet, lalu coba lagi.<br><button id="retry">Muat ulang</button></div>';
+    $("retry").onclick = load;
+  }
+}
+
+function avatar(p){
+  const img = p.foto ? `<img src="${esc(p.foto)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : "";
+  return `<span class="ava">${img || esc(initials(p.nama))}</span>`;
+}
+
+function render(){
+  $("count").innerHTML = `<b>${ranked.length}</b> anggota`;
+  if (!ranked.length){
+    $("podium").innerHTML = '<div class="state" style="grid-column:1/-1">Belum ada data peringkat.</div>';
+    return;
+  }
+  const names = ["first","second","third"];
+  $("podium").innerHTML = ranked.slice(0, 3).map((p, i) => `
+    <article class="pc ${names[i]} ${themeOf(p.tahun)}">
+      <div class="p-top"><span class="p-div">${esc(p.divisi)}</span>${avatar(p)}</div>
+      <div class="rank" aria-label="Peringkat ${p.rank}">${p.rank}</div>
+      <div>
+        <div class="p-name">${esc(p.nama)}</div>
+        <div class="p-foot"><span class="p-role">${esc(p.jabatan)}</span><span class="pts">${fmt(p.score)} poin</span></div>
+      </div>
+    </article>`).join("");
+
+  const hasRest = ranked.length >= CONFIG.TABLE_START;
+  $("rest").hidden = !hasRest;
+  if (hasRest) renderTable();
+}
+
+function renderTable(){
+  const q = norm($("q").value);
+  const rows = ranked.filter((p, i) => i + 1 >= CONFIG.TABLE_START && (!q || norm(p.nama).includes(q)));
+  $("table").innerHTML = rows.length ? rows.map(p => `
+    <div class="row">
+      <span class="r-n">${p.rank}</span>
+      <div>
+        <div class="r-name"><i class="dot ${themeOf(p.tahun)}"></i><span>${esc(p.nama)}</span></div>
+        <div class="r-sub">${esc([p.jabatan, p.divisi].filter(Boolean).join(", "))}</div>
+      </div>
+      <span class="r-pts">${fmt(p.score)}</span>
+    </div>`).join("") : '<div class="state">Nama tidak ditemukan.</div>';
+}
+$("q").addEventListener("input", renderTable);
+
+load();
+</script>
+</body>
+</html>
